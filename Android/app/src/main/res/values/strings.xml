@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">YASH</string>
+    <string name="server">https://projectmctibers.appspot.com/</string>
+    <string name="title_activity_main2">YASH</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_activity_pin_locations">Map</string>
+    <string name="apiKey">AIzaSyAp6rVERlPFzV8BRn31jn6lqmrGBOmj58I</string>
+</resources>
