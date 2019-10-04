@@ -16,10 +16,11 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-import androidx.work.WorkManager;
 
 import com.volvain.yash.Home;
 import com.volvain.yash.R;
+
+import java.util.ArrayList;
 
 
 public class Database extends SQLiteOpenHelper
@@ -33,6 +34,7 @@ public class Database extends SQLiteOpenHelper
     public static final String Col2="Name";
     Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     String name;
+    public static int size=0;
     private Context context;
 
 
@@ -49,6 +51,8 @@ public class Database extends SQLiteOpenHelper
         db.execSQL(CreateTableInfo);
         String CreateTableHelp="Create table Help (Phone_no Integer  ,Name Text ,Lng Real ,Lat Real,message Text )";
         db.execSQL(CreateTableHelp);
+        String CreateTablePinLoctaions="Create table LocationsPinned(Lng Real not null,Lat Real not null )";
+        db.execSQL(CreateTablePinLoctaions);
     }
 
     @Override
@@ -64,7 +68,7 @@ public class Database extends SQLiteOpenHelper
         cv.put(Col1,id);
         cv.put(Col2,name);
         db.insert(TableInfo,null,cv);
-Log.i("gauravrmsc","data inserted"+getId());
+//Log.i("gauravrmsc","data inserted"+getId());
 
     }
 
@@ -134,8 +138,8 @@ return nm;
     }
 
 
-    public void insertHelp(Long ph,String name,double lng,double lat,String message)
-    {Log.i("gauravrmsc","in insert");
+    public void insertHelp(Long ph,String name,double lng,double lat,String message){
+    //{Log.i("gauravrmsc","in insert");
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Phone_no",ph);
@@ -327,6 +331,69 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
     }
     public void logout() {
         deletLogIn();
+    }
+
+    public void insertLngLng(ArrayList<ArrayList<Double>> ls){
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues cv=new ContentValues();
+        //  ArrayList<ArrayList<Double>> first=new ArrayList<>();
+        //ArrayList<ArrayList> firstList=new ArrayList<>();
+        //double first=0, second = 0;
+       // Log.i( "ana","database clear1" +firstList.isEmpty() );
+        for (ArrayList firstList:ls){
+            Log.i( "ana1","database clear1" +firstList.get(0) );
+            cv.put("Lng",(double)firstList.get(0));
+            cv.put("Lat",(double) firstList.get(1));
+            db.insert("LocationsPinned",null,cv);
+        }
+    }
+
+    public double getLat(){
+        double lat=0;
+        SQLiteDatabase db=this.getReadableDatabase();
+        String Query="Select lat from LocationsPinned";
+        Cursor rs =db.rawQuery(Query,null);
+        while(rs.moveToNext())
+            lat=rs.getDouble(0);
+        return lat;
+    }
+    public double getLng(){
+        double lng=0;
+        SQLiteDatabase db=this.getReadableDatabase();
+        String Query="Select lng from LocationsPinned";
+        Cursor rs =db.rawQuery(Query,null);
+        while(rs.moveToNext())
+            lng=rs.getDouble(0);
+        return lng;
+    }
+
+    public int getTableSize(){
+        String Q="Select * from LocationsPinned";
+        Cursor cr=db.rawQuery(Q,null);
+        size=cr.getCount();
+        return size;
+    }
+    public void clearLocations(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        String Query="delete from LocationsPinned";
+        db.execSQL(Query);
+       // db.delete(TableHelp,null,null);
+    }
+
+    public  ArrayList<ArrayList<Double>> latlng(){
+        int size=getTableSize();
+        ArrayList<Double> ls = new ArrayList<>();
+        ArrayList<ArrayList<Double>> lst = new ArrayList<>();
+        for (int i=0;i<size;i++) {
+            double lng=getLng();
+            ls.add(lng);
+            double lat =getLat();
+            ls.add(lat);
+           lst.add(ls);
+
+        }
+        Log.i( "ana","sizeList1111" +lst.isEmpty() );
+        return lst;
     }
 }
 

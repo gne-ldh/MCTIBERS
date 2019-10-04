@@ -1,15 +1,7 @@
 package com.volvain.yash;
 
-import com.volvain.yash.DAO.Database;
-import android.app.Activity;
 import android.content.Context;
-import android.provider.ContactsContract;
 import android.util.Log;
-import android.view.View;
-
-import androidx.work.WorkManager;
-
-import com.volvain.yash.DAO.Database;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
