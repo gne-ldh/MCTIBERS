@@ -20,9 +20,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.volvain.yash.DAO.Database;
 
 
-
-
-
 public class homeFragment extends Fragment {
     Button helpButton;
     TextView userName;

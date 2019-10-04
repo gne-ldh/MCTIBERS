@@ -33,6 +33,7 @@
         tools:ignore="MissingConstraints"></SearchView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/FloatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/ic_edit_location_black_24dp"
