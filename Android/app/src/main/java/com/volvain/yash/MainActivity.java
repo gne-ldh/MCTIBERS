@@ -6,10 +6,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GoogleApiAvailability;
-import com.volvain.yash.DAO.Database;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -26,6 +26,7 @@ public class loginFragment extends Fragment {
     private Button loginBtn;
     private EditText idField;
     private EditText passswordField;
+    public static long ID;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -55,7 +56,7 @@ public class loginFragment extends Fragment {
         {
 
             WorkManager.getInstance().cancelAllWork();//TODO add to logout
-     Long id=Long.parseLong(idField.getText().toString());
+     final Long id=Long.parseLong(idField.getText().toString());
      String password=passswordField.getText().toString();
      Data data= new Data.Builder()
                .putLong("id",id).putString("password",password).build();
@@ -69,6 +70,7 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
+                            ID=id;
                             openHome();
                             BackgroundWork.sync();
                         }
