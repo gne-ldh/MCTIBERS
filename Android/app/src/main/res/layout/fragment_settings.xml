@@ -15,13 +15,36 @@
             android:orientation="vertical">
 
             <TextView
+                android:textStyle="bold"
+                app:fontFamily="cursive"
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Alert settings"
+                android:textColor="#000000"
                 android:textAlignment="center"
-                android:textSize="30dp" />
+                android:textSize="40dp" />
 
+
+            <Switch
+                android:id="@+id/switch1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:text="Notify people arround me"
+                android:textSize="20dp"
+                tools:layout_editor_absoluteX="69dp"
+                tools:layout_editor_absoluteY="67dp"
+                />
+
+            <Switch
+                android:id="@+id/switch2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+
+                android:text="Notify Police"
+                android:textSize="20dp" />
             <Switch
 
                 android:layout_width="match_parent"
@@ -32,26 +55,6 @@
                 android:textSize="20dp"
                 tools:layout_editor_absoluteX="69dp"
                 tools:layout_editor_absoluteY="67dp" />
-
-            <Switch
-                android:id="@+id/switch1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:text="Notify people arround me"
-                android:textSize="20dp"
-                tools:layout_editor_absoluteX="69dp"
-                tools:layout_editor_absoluteY="67dp" />
-
-            <Switch
-                android:id="@+id/switch2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-
-                android:text="Notify Police"
-                android:textSize="20dp" />
-
             <Switch
                 android:id="@+id/switch3"
                 android:layout_width="match_parent"
@@ -60,14 +63,46 @@
                 android:text="Let me choose during emergency"
                 android:textSize="20dp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/addLocation"
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
-                app:srcCompat="@drawable/ic_location_on_black_24dp"
-                android:layout_gravity="right"
-                android:layout_margin="20dp"/>
+                android:text="Add contacts"
+                android:textSize="20dp"
+                android:layout_margin="15dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_round"
+                android:textColor="#000000">
+
+            </Button>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+               >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:text="Add Location"
+                    android:textColor="#000000"
+                    android:textSize="20dp">
+
+                </TextView>
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/addLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="270dp"
+                    android:clickable="true"
+                    app:srcCompat="@drawable/ic_location_on_black_24dp" />
+
+            </RelativeLayout>
 
         </LinearLayout>
     </ScrollView>
