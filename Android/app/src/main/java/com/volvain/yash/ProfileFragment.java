@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
+import com.volvain.yash.DAO.Database;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,10 +29,18 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private String name="";
+    private String profile="";
+    private String profileDesc="";
+    private long id=0l;
+Database db;
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
+        db=new Database(this.getContext());
+        id=db.getId();
+        name=db.getName();
+
         // Required empty public constructor
     }
 

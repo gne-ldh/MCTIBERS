@@ -12,8 +12,13 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -246,11 +251,28 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     public void addToDatabase(){
 
     //    if(loginFragment.ID!=0)
+        if(Global.checkInternet()==0){
            db.clearLocations();
         Log.i( "ana","database clear" +ListLocations.isEmpty() );
            db.insertLngLng(ListLocations);
         Log.i( "ana","insert" +ListLocations.isEmpty() );
-        //TODO store LatLng in database
+        OneTimeWorkRequest workRequest=new OneTimeWorkRequest.Builder(SetUserLocServer.class).build();
+        WorkManager.getInstance().enqueue(workRequest);
+        WorkManager.getInstance().getWorkInfoByIdLiveData(workRequest.getId())
+                .observe(this, new Observer<WorkInfo>() {
+                    @Override
+                    public void onChanged(@Nullable WorkInfo workInfo) {
+                        if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
+                            Toast.makeText(PinLocation.this, "Processing!", Toast.LENGTH_LONG).show();
+                        else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                            Toast.makeText(PinLocation.this,"Locations Added!",Toast.LENGTH_LONG).show();
+                        }
+                        else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                            Toast.makeText(PinLocation.this,"Error Adding Locations",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });}
+        else Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG).show();
     }
 
 }

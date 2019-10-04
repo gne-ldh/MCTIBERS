@@ -374,7 +374,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
         return size;
     }
     public void clearLocations(){
-        SQLiteDatabase db=this.getReadableDatabase();
+        SQLiteDatabase db=this.getWritableDatabase();
         String Query="delete from LocationsPinned";
         db.execSQL(Query);
        // db.delete(TableHelp,null,null);
@@ -385,6 +385,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
         ArrayList<Double> ls = new ArrayList<>();
         ArrayList<ArrayList<Double>> lst = new ArrayList<>();
         for (int i=0;i<size;i++) {
+            ls.clear();
             double lng=getLng();
             ls.add(lng);
             double lat =getLat();
