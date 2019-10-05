@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">STEP</string>
     <string name="server">https://projectmctibers.appspot.com/</string>
-    <string name="title_activity_main2">YASH</string>
+    <string name="title_activity_main2">STEP</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
