@@ -1,6 +1,5 @@
 package com.volvain.yash;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,17 +20,20 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.volvain.yash.DAO.Database;
-
 public class loginFragment extends Fragment {
     private Button createAccountBtn;
     private Button loginBtn;
     private EditText idField;
     private EditText passswordField;
+    loginFragment(){
+      // Log.i("gauravrmsc",""+this.getContext());
 
+    }
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
       View v= inflater.inflate(R.layout.fragment_login,null);;
         createAccountBtn=(Button)v.findViewById(R.id.createAccount);
         loginBtn=(Button)v.findViewById(R.id.login_btn);
@@ -54,7 +56,7 @@ public class loginFragment extends Fragment {
 
     }
     public void login(){
-        if(new Database(this.getContext()).getId()==0l){
+
         if(Global.checkInternet()==0)
         {
 
@@ -73,8 +75,8 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
-
-                            openHome();
+                           submit();
+                           // openHome();
                             BackgroundWork.sync();
                         }
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
@@ -82,15 +84,8 @@ public class loginFragment extends Fragment {
                         }
                     }
                 });}
-         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();}
-        else {
-            Fragment fragment = new ProfileFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
+         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+
 
     }
     public void openHome(){
@@ -108,5 +103,37 @@ public class loginFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+    private void submit(){
+
+        if(Global.checkInternet()==0){
+          /*  profession=professionTf.getText().toString();
+            Toast.makeText(this.getContext(),profession,Toast.LENGTH_LONG).show();
+            Log.i("gmk",profession);
+            professionDesc=ProfessionDescTf.getText().toString();
+            Log.i("gkk","gkk");*/
+            Data d=new Data.Builder()
+                    .putString("profession","profession")
+                    .putString("professionDesc","professionDesc").build();
+            OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(SetProfileServer.class)
+                    .setInputData(d).build();
+            Log.i("gkk","gkk1");
+            WorkManager.getInstance().enqueue(work);
+            Log.i("gkk","gkk2");
+            WorkManager.getInstance().getWorkInfoByIdLiveData(work.getId())
+                    .observe(this, new Observer<WorkInfo>() {
+                        @Override
+                        public void onChanged(@Nullable WorkInfo workInfo) {
+                            if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                                Toast.makeText(loginFragment.this.getContext(),"Profile Update Sucessful!",Toast.LENGTH_LONG).show();
+                            }
+                            if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
+                                Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
+                            else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                                Toast.makeText(loginFragment.this.getContext(),"Error",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });}
+        else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
     }
 }
