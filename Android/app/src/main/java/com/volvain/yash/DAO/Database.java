@@ -57,8 +57,7 @@ public class Database extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        //db.execSQL(" DROP TABLE IF EXISTS Info");
-        //onCreate(db);
+
     }
 
     public  void insertData(Long id, String name)
@@ -68,8 +67,6 @@ public class Database extends SQLiteOpenHelper
         cv.put(Col1,id);
         cv.put(Col2,name);
         db.insert(TableInfo,null,cv);
-//Log.i("gauravrmsc","data inserted"+getId());
-
     }
 
 
@@ -178,7 +175,6 @@ return nm;
         SQLiteDatabase db=this.getReadableDatabase();
         String Query="Select * from "+TableHelp;
         Cursor rs =db.rawQuery(Query,null);
-       // rs.moveToFirst();
         return rs;
     }
 
@@ -210,7 +206,6 @@ return nm;
 
         String StringId=Long.toString(id);
         ContentValues cv= new ContentValues();
-        //Cursor rs=getHelpId();
         Long i=0L;
         String Query="Select Phone_no from "+TableHelp;
         Cursor rs =db.rawQuery(Query,null);
@@ -223,15 +218,10 @@ return nm;
                 cv.put("lat", lat);
                 cv.put("lng", lng);
                 db.update(TableHelp, cv, "Phone_no= ?", new String[]{StringId});
-
                 return;
             }
-
         }
-
             insertHelp(id, name, lng, lat,message);
-
-
         }
       
 
@@ -302,7 +292,7 @@ return nm;
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
-       
+
         for (ArrayList firstList:ls){
             Log.i( "ana1","database clear1" +firstList.get(0) );
             cv.put("Lng",(double)firstList.get(0));
@@ -340,7 +330,6 @@ return nm;
         SQLiteDatabase db=this.getWritableDatabase();
         String Query="delete from LocationsPinned";
         db.execSQL(Query);
-       // db.delete(TableHelp,null,null);
     }
 
     public  ArrayList<ArrayList<Double>> latlng(){
