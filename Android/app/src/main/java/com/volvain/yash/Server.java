@@ -5,18 +5,18 @@ import android.util.Log;
 
 import com.volvain.yash.DAO.Database;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.HttpURLConnection;
-import java.util.Map;
-
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class Server  {
 
@@ -103,8 +103,11 @@ public String getUserLoc(Long id){
     //return message;
     }
 
-    public void getProfile(Long id){
+    public ArrayList getProfile(Long id){
+        Log.i("gkm","2");
+        ArrayList<String> profileDetails=new ArrayList<>();
     try{
+        Log.i("gkm","3");
         url=new URL(serverUri+"GetProfile?id="+id);
         con=(HttpURLConnection)url.openConnection();
         BufferedInputStream i=new BufferedInputStream(con.getInputStream());
@@ -113,29 +116,38 @@ public String getUserLoc(Long id){
           while((c=i.read())!=-1){
               result+=(char)c;
           }
+        Log.i("gkm","4");
          JSONObject profile=(JSONObject) new JSONParser().parse(result);
           String profession=profile.get("profession").toString();
           String professionDesc=profile.get("professionDesc").toString();
-          //TODO insert into db
+
+          profileDetails.add(0,profession);
+          profileDetails.add(1,professionDesc);
 
     }catch(MalformedURLException e){} catch (IOException e) {
         e.printStackTrace();
     } catch (ParseException e) {
         e.printStackTrace();
     }
+    return profileDetails;
     }
     public int setProfile(Long id,String profession,String professionDesc){
     int i=0;
         try {
-            url=new URL(serverUri+"SetProfile?id="+id+"&profession="+profession+"&professionDesc="+professionDesc);
+            Log.i("gkk","2");
+            url=new URL(serverUri+"SetProfile?id="+id+"&Profession="+profession+"&ProfessionDesc="+professionDesc);
+            Log.i("gkk","3");
             con=(HttpURLConnection)url.openConnection();
+            Log.i("gkk","4");
             BufferedInputStream in=new BufferedInputStream(con.getInputStream());
+            Log.i("gkk","5");
             i=Integer.parseInt(""+(char)in.read());
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Log.i("gkk","6");
         return i;
 }
     public int subsequentHelpRequest(Long id,Double longitude,Double latitude){

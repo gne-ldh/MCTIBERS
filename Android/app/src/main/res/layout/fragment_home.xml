@@ -29,7 +29,7 @@
                         android:textSize="20dp" />
 
 
-                    <com.google.android.material.button.MaterialButton
+                    <Button
 
                         android:id="@+id/helpButton"
                         android:layout_width="200dp"

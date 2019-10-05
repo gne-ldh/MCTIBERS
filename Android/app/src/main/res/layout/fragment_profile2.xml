@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ProfileFragment">
+        tools:context=".Profile">
 
         <View
             android:layout_width="wrap_content"
@@ -73,46 +73,50 @@
 
             </RelativeLayout>
         </LinearLayout>
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="398dp"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="350dp">
-
+            android:layout_marginTop="350dp"
+            android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:focusableInTouchMode="true"
-                android:hint="Phone number"
-                android:id="@+id/profileId"
-                android:inputType="number"
-                android:textColor="#000000"
-                android:textSize="20dp" />
-            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profession"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:focusableInTouchMode="true"
                 android:hint="Profession"
-                android:id="@+id/profession"
-                android:inputType="number"
+                android:inputType="textMultiLine"
                 android:textColor="#000000"
                 android:textSize="20dp" />
+
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/professionDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
                 android:focusableInTouchMode="true"
                 android:hint="Profession Description"
-                android:id="@+id/professionDescription"
                 android:inputType="textMultiLine"
                 android:textColor="#000000"
                 android:textSize="20dp" />
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/profileId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                android:focusableInTouchMode="true"
+                android:hint="Phone number"
+                android:inputType="number"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+
+
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/submitProfile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
@@ -122,18 +126,17 @@
                 android:text="Save"
                 android:textColor="#000000"
                 android:textSize="20dp"></Button>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Settings"
-                android:textColor="#000000"
-                android:textSize="20dp"
                 android:layout_margin="15dp"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round">
-            </Button>
-
+                android:background="@drawable/bg_round"
+                android:text="Settings"
+                android:textColor="#000000"
+                android:textSize="20dp"></Button>
 
 
 
