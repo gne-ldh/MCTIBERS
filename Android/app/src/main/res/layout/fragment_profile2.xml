@@ -33,7 +33,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
 
-                    android:src="@drawable/cop1"
+                    android:src="@drawable/logostep"
                     android:elevation="1dp">
 
                 </de.hdodenhof.circleimageview.CircleImageView>
@@ -49,7 +49,8 @@
                         app:contentPaddingRight="15dp"
                         app:contentPaddingLeft="15dp"
                         app:contentPaddingBottom="15dp"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="10dp"
+                        android:elevation="30dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -120,12 +121,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="15dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/bg_round"
                 android:text="Save"
                 android:textColor="#000000"
-                android:textSize="20dp"></Button>
+                android:textSize="20dp"
+                android:background="@drawable/bg_round">
+            </Button>
+
+
+
+
 
             <Button
                 android:layout_width="match_parent"
