@@ -1,6 +1,7 @@
 package com.volvain.yash;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.work.Worker;
@@ -23,14 +24,20 @@ public class GetUserLocServer extends Worker {
     @NonNull
     @Override
     public Result doWork() {
+        Log.i("userData","3");
         Long id=new Database(context).getId();
         String result=new Server(context).getUserLoc(id);
-        try {
+        try {if(!result.equals("")){
             ArrayList lst=(ArrayList) new JSONParser().parse(result);
+            Log.i("datalistusr",lst.toString());
+            new Database(context).insertLngLng(lst);
+            Log.i("datalistusr",lst.toString());
+            return Result.success();}
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return null;
+        return Result.failure();
     }
 }

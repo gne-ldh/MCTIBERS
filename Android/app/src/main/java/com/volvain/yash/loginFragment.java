@@ -1,6 +1,7 @@
 package com.volvain.yash;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,8 +74,10 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
-                            openHome();
                             getLoc();
+                            Log.i("data","data received00");
+                            openHome();
+
                             BackgroundWork.sync();
                         }
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
@@ -105,12 +108,12 @@ public class loginFragment extends Fragment {
     private void getLoc(){
 
         if(Global.checkInternet()==0){
-
-
+             Log.i("userData","1");
             OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(GetUserLocServer.class)
                     .build();
-
+            Log.i("userData","2");
             WorkManager.getInstance().enqueue(work);
+            Log.i("userData","3");
             WorkManager.getInstance().getWorkInfoByIdLiveData(work.getId())
                     .observe(this, new Observer<WorkInfo>() {
                         @Override

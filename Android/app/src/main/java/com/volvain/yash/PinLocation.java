@@ -72,9 +72,11 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
        // Log.i("gauravrmsc","clearing list");
         ListLocations.clear();
+        //Log.i("ana","List"+ListLocations.size());
         sv = (SearchView) findViewById(R.id.sv);
         db = new Database(this);
         getDeviceLocation();
+       // getPinnedLocations();
     }
 
 
@@ -93,6 +95,9 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
                 try {
                     getLoc();
+
+
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -169,8 +174,10 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
         floatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 addToDatabase();
             }
+
         });
 
 
@@ -178,47 +185,30 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
 
     private void getLoc() throws IOException {
-        getPinnedLocations();
+        // getPinnedLocations();
         String LocationName = sv.getQuery().toString() + ",India";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> AddressList = geocoder.getFromLocationName(LocationName, 1);
+       getPinnedLocations();
         if (AddressList.size() > 0) {
             Address address = AddressList.get(0);
             ArrayList<Double> list = new ArrayList<>();
             list.add(0, address.getLongitude());
             list.add(1, address.getLatitude());
             ListLocations.add(list);
-            //  Toast.makeText(this, "location added in list", Toast.LENGTH_SHORT).show();
-           /* if (db.getTableSize() == 1) {
-                Toast.makeText(this, "list" + list.get(0), Toast.LENGTH_SHORT).show();
-                mMap.addMarker(new MarkerOptions().position(new LatLng(address.getLatitude(), address.getLongitude())));
-                moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), 15, "" + address);
-            }*/
 
-           /* for (int i = 1; i < db.getTableSize(); i--) {
-                Toast.makeText(this, "inside for", Toast.LENGTH_SHORT).show();
-                ArrayList<Double> ls = getPinnedLocations();
-                if (!ls.equals(list)) {
-                    Toast.makeText(this, "inside if", Toast.LENGTH_SHORT).show();
-                    ListLocations.add(list);
-                    Toast.makeText(this, "list" + list.get(0), Toast.LENGTH_SHORT).show();
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(address.getLatitude(), address.getLongitude())));
-                    moveCamera(new LatLng(address.getLatitude(), address.getLongitude()), 15, "" + address);
-                    getPinnedLocations();
-                } else {
-                    Toast.makeText(this, "Already Pinned", Toast.LENGTH_SHORT).show();
-                }*/
+
             Log.i( "ana","before" +ListLocations.isEmpty() );
-
             for (ArrayList firstList:ListLocations){
-                Log.i( "ana","before111" +firstList.isEmpty() );
+             //   Log.i( "ana","before111" +firstList.isEmpty() );
                 if(firstList.isEmpty())return;
                 LatLng loc=new LatLng((Double)firstList.get(1),(Double) firstList.get(0));
-                Log.i( "ana","lat" +firstList.get(1));
-                Log.i( "ana","lng" +firstList.get(0));
-                 mMap.addMarker(new MarkerOptions().position(loc));
-                moveCamera(loc,15,"");
-            }
+              //  Log.i( "ana","lat" +firstList.get(1));
+                //Log.i( "ana","lng" +firstList.get(0));
+                mMap.addMarker(new MarkerOptions().position(loc));
+                moveCamera(loc,15,"");}
+
+
         }
     }
 
@@ -226,7 +216,6 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
 
     public void getPinnedLocations() {
-
       //  ArrayList<ArrayList<Double>> loc = new ArrayList<>();
         Log.i( "ana","inside1" +ListLocations.isEmpty() );
     //ArrayList<Double> lc = new ArrayList<>();
@@ -239,22 +228,44 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
         if(lat!=0)
             lc.add(lat);*/
-        ArrayList lst=db.latlng();
-        Log.i( "ana","sizeList" +lst.isEmpty() );
+      //  ArrayList lst=db.latlng();
+       ArrayList lst=db.get();
+       Log.i("ana1 ll",""+lst.isEmpty());
         if(lst!=null)ListLocations=lst;
        // Log.i( "ana","sizeList" +lc.get(1) );
         //ListLocations.add(lc);
         //Log.i( "ana","sizeList" +ListLocations.isEmpty() );
      //   Toast.makeText(this, "sizeList" +loc.size() , Toast.LENGTH_SHORT).show();
        // return ListLocations;
-}
+
+
+
+
+    }
     public void addToDatabase(){
 
     //    if(loginFragment.ID!=0)
+
+     //   getPinnedLocations();
+
+
+
         if(Global.checkInternet()==0){
+
            db.clearLocations();
-        Log.i( "ana","database clear" +ListLocations.isEmpty() );
+        Log.i( "ana","database clear..............." +ListLocations.isEmpty() );
            db.insertLngLng(ListLocations);
+
+        Log.i( "ana","insert............" +ListLocations.isEmpty() );
+        //TODO store LatLng in database
+        for(ArrayList<Double> ls: ListLocations)
+            Log.i("ListLocations"," "+ ls.get(0));
+        //Log.i("ana"," "+ ListLocations.get(1));
+
+
+
+
+
         Log.i( "ana","insert" +ListLocations.isEmpty() );
         OneTimeWorkRequest workRequest=new OneTimeWorkRequest.Builder(SetUserLocServer.class).build();
         WorkManager.getInstance().enqueue(workRequest);
@@ -273,6 +284,7 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
                     }
                 });}
         else Toast.makeText(this,"No Internet Connection",Toast.LENGTH_LONG).show();
+
     }
 
 }

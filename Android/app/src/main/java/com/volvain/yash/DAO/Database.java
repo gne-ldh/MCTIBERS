@@ -1,5 +1,7 @@
 package com.volvain.yash.DAO;
-
+/*
+ *Managing local database
+ */
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -36,6 +38,7 @@ public class Database extends SQLiteOpenHelper
     String name;
     public static int size=0;
     private Context context;
+    static int first=0;
 
 
     public Database(Context context) {
@@ -336,10 +339,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
-        //  ArrayList<ArrayList<Double>> first=new ArrayList<>();
-        //ArrayList<ArrayList> firstList=new ArrayList<>();
-        //double first=0, second = 0;
-       // Log.i( "ana","database clear1" +firstList.isEmpty() );
+
         for (ArrayList firstList:ls){
             Log.i( "ana1","database clear1" +firstList.get(0) );
             cv.put("Lng",(double)firstList.get(0));
@@ -394,6 +394,24 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
 
         }
         Log.i( "ana","sizeList1111" +lst.isEmpty() );
+        return lst;
+    }
+    public ArrayList<ArrayList<Double>>  get() {
+        double lat = 0,lng=0;
+        ArrayList<ArrayList<Double>> lst = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        String Query = "Select * from LocationsPinned";
+        Cursor rs = db.rawQuery(Query, null);
+        // rs.moveToFirst();
+        while( rs.moveToNext()){
+            ArrayList<Double> l=new ArrayList<>();
+            lng = rs.getDouble(0);
+            l.add(lng);
+            lat = rs.getDouble(1);
+            l.add(lat);
+
+            lst.add(l);}
+        Log.i("Database"," " +lst.isEmpty());
         return lst;
     }
 }
