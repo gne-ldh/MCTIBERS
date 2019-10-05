@@ -40,7 +40,6 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
     String name;
     Button stop;
     String message;
-    //EditText messageField;
 
    protected void onCreate(Bundle savedInstanceState){
 
@@ -102,7 +101,6 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void findLocationProvider(){
-       Log.i("gauravrmsc","Finding Provider");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION},HelpSync.this.AAAA);
         }
@@ -113,15 +111,12 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
         location = locationManager.getLastKnownLocation(provider);
         Toast.makeText(this,""+location,Toast.LENGTH_LONG).show();
         if(location==null){
-            Log.i("gauravrmsc","gps not available");
             provider=LocationManager.NETWORK_PROVIDER;
             location = locationManager.getLastKnownLocation(provider);
 
         }
-        Log.i("gauravrmsc","Location"+location);
     }
     private void sendRequest(int no,Long id,String name,Double longitude,Double latitude,String message){
-       Log.i("number","no"+no);
        Data data=new Data.Builder()
                .putInt("no",no)
                 .putLong("id",id)
@@ -158,9 +153,9 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
             Database db= new Database(this);
             id=db.getSenderId();
             name=db.getSenderName();
-
-
     }
+
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onResume() {
