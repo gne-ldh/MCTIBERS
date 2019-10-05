@@ -11,11 +11,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="96d8717c-73d5-494b-a3dd-42bbe2b85a05" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/loginFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/loginFragment.java" afterDir="false" />
-    </list>
+    <list default="true" id="96d8717c-73d5-494b-a3dd-42bbe2b85a05" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,8 +53,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+            <state relative-caret-position="255">
+              <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -572,8 +568,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+        <state relative-caret-position="255">
+          <caret line="27" column="13" lean-forward="true" selection-start-line="27" selection-start-column="13" selection-end-line="27" selection-end-column="13" />
         </state>
       </provider>
     </entry>
