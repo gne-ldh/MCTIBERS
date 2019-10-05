@@ -60,8 +60,7 @@ public class Database extends SQLiteOpenHelper
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        //db.execSQL(" DROP TABLE IF EXISTS Info");
-        //onCreate(db);
+
     }
 
     public  void insertData(Long id, String name)
@@ -71,32 +70,20 @@ public class Database extends SQLiteOpenHelper
         cv.put(Col1,id);
         cv.put(Col2,name);
         db.insert(TableInfo,null,cv);
-//Log.i("gauravrmsc","data inserted"+getId());
-
     }
 
 
     public String getName()
     {
         String nm="";
-       // Long i=new Long(0);
+
         SQLiteDatabase db=this.getReadableDatabase();
-       // String Query ="Select * from Login where id= "+ id;
         String Query ="Select name from Login ";
         Cursor rs= db.rawQuery(Query,null);
         if(rs.moveToNext())
         nm=rs.getString(0);
         else nm=" User";
-        /*while (rs.moveToNext())
-        {
-            i= rs.getLong(0);
-            nm=rs.getString(1);
-        }
-        if(i==id)
-            return nm;
 
-        else
-            return "no_such_id_exist";*/
 return nm;
     }
 
@@ -134,15 +121,12 @@ return nm;
     public  void deletLogIn()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-      //Cursor rs = null;
-      //if(rs.getCount()>0) {
-          db.delete(TableInfo, null, null);
+        db.delete(TableInfo, null, null);
 
     }
 
 
     public void insertHelp(Long ph,String name,double lng,double lat,String message){
-    //{Log.i("gauravrmsc","in insert");
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Phone_no",ph);
@@ -152,11 +136,7 @@ return nm;
         cv.put("message",message);
 
         db.insert(TableHelp,null,cv);
-
         getNotification();
-
-       // return (int) result;
-
     }
 
 
@@ -198,7 +178,6 @@ return nm;
         SQLiteDatabase db=this.getReadableDatabase();
         String Query="Select * from "+TableHelp;
         Cursor rs =db.rawQuery(Query,null);
-       // rs.moveToFirst();
         return rs;
     }
 
@@ -230,12 +209,10 @@ return nm;
 
         String StringId=Long.toString(id);
         ContentValues cv= new ContentValues();
-        //Cursor rs=getHelpId();
         Long i=0L;
         String Query="Select Phone_no from "+TableHelp;
         Cursor rs =db.rawQuery(Query,null);
-      //  Log.i("gauravrmsc","checking Value "+id);
-        //Log.i("gauravrmsc","checking Value "+rs.moveToNext());
+
 
         while(rs.moveToNext()) {
             i = rs.getLong(0);
@@ -244,42 +221,26 @@ return nm;
                 cv.put("lat", lat);
                 cv.put("lng", lng);
                 db.update(TableHelp, cv, "Phone_no= ?", new String[]{StringId});
-
                 return;
             }
-
         }
-
             insertHelp(id, name, lng, lat,message);
-
-
         }
       
 
 
     public void getNotification(){
 
-    /*NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"Yash")
-            .setContentTitle("New Request")
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Log.i("gauravrmsc"," n"+builder);
-    NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-        Log.i("gauravrmsc"," notificati");
-    manager.notify(1,builder.build());
-        Log.i("gauravrmsc"," notification sent");
-  */createNotificationChannel();
-       /* NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("");
-        bigText.setBigContentTitle("Today's Bible Verse");
-        bigText.setSummaryText("Text in detail");*/
-       int priority;
+
+     createNotificationChannel();
+
+        int priority;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)priority= NotificationCompat.PRIORITY_HIGH ;else priority=NotificationCompat.PRIORITY_MAX ;
         Intent intent = new Intent(context, Home.class);
         intent.putExtra("fragmentNo","NotificationFragment" );
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(context,CHANNELID)
+        NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(context,CHANNELID)
         .setContentTitle("New Request")
         .setContentText(name+" Needs Help")
         .setAutoCancel(true)
@@ -306,17 +267,12 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
     public double getHelpLatitude(Long id)
     {
         double lat ;
-
         SQLiteDatabase db=this.getReadableDatabase();
         String q= "Select Lat from Help where Phone_no ="+id;
-
         Cursor s =db.rawQuery(q,null);
-
         s.moveToNext();
              lat = s.getDouble(0);
-
         return lat;
-
     }
 
     public double getHelpLng(Long id)
@@ -329,7 +285,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
         Cursor s =db.rawQuery(q,null);
         s.moveToNext();
          lng =s.getDouble(0);
-        Log.i("aa","Lng" + lng);
+
         return lng;
     }
     public void logout() {
@@ -377,7 +333,6 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
         SQLiteDatabase db=this.getWritableDatabase();
         String Query="delete from LocationsPinned";
         db.execSQL(Query);
-       // db.delete(TableHelp,null,null);
     }
 
     public  ArrayList<ArrayList<Double>> latlng(){

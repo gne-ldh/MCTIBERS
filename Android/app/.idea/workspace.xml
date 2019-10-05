@@ -10,18 +10,20 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" line="176" />
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" line="171" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="96d8717c-73d5-494b-a3dd-42bbe2b85a05" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/DAO/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/DAO/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/HelpSync.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/HelpSync.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Home.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Home.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/loginFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/loginFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Profile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/Profile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/volvain/yash/homeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/volvain/yash/homeFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/layout/fragment_profile2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/layout/fragment_profile2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../build.gradle" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -109,19 +111,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="76">
-              <caret line="186" column="36" lean-forward="true" selection-start-line="186" selection-start-column="36" selection-end-line="186" selection-end-column="36" />
+            <state>
+              <caret lean-forward="true" />
               <folding>
-                <element signature="e#3822#3823#0" expanded="true" />
-                <element signature="e#4217#4951#0" expanded="true" />
-                <element signature="e#4950#4951#0" expanded="true" />
-                <element signature="e#5398#6168#0" expanded="true" />
-                <element signature="e#6167#6168#0" expanded="true" />
-                <element signature="e#6155#6322#0" expanded="true" />
-                <element signature="e#6321#6322#0" expanded="true" />
+                <element signature="e#3887#3888#0" expanded="true" />
+                <element signature="e#3931#3932#0" expanded="true" />
+                <element signature="e#4267#5001#0" expanded="true" />
+                <element signature="e#5000#5001#0" expanded="true" />
+                <element signature="e#5448#5939#0" expanded="true" />
+                <element signature="e#5938#5939#0" expanded="true" />
+                <element signature="e#5986#6137#0" expanded="true" />
+                <element signature="e#6136#6137#0" expanded="true" />
                 <element signature="e#9838#10728#0" expanded="true" />
                 <element signature="e#10727#10728#0" expanded="true" />
               </folding>
@@ -129,15 +132,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/DAO/Database.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="51">
               <caret line="3" column="3" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#9772#9773#0" expanded="true" />
-                <element signature="e#9800#9801#0" expanded="true" />
+                <element signature="e#8318#8319#0" expanded="true" />
+                <element signature="e#8346#8347#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -171,9 +174,9 @@
         <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/Database.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/loginFragment.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/GetUserLocServer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java" />
         <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/DAO/Database.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java" />
       </list>
     </option>
   </component>
@@ -643,24 +646,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="76">
-          <caret line="186" column="36" lean-forward="true" selection-start-line="186" selection-start-column="36" selection-end-line="186" selection-end-column="36" />
-          <folding>
-            <element signature="e#3822#3823#0" expanded="true" />
-            <element signature="e#4217#4951#0" expanded="true" />
-            <element signature="e#4950#4951#0" expanded="true" />
-            <element signature="e#5398#6168#0" expanded="true" />
-            <element signature="e#6167#6168#0" expanded="true" />
-            <element signature="e#6155#6322#0" expanded="true" />
-            <element signature="e#6321#6322#0" expanded="true" />
-            <element signature="e#9838#10728#0" expanded="true" />
-            <element signature="e#10727#10728#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/Server.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
@@ -677,8 +662,27 @@
           <caret line="3" column="3" lean-forward="true" selection-start-line="3" selection-start-column="3" selection-end-line="3" selection-end-column="3" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#9772#9773#0" expanded="true" />
-            <element signature="e#9800#9801#0" expanded="true" />
+            <element signature="e#8318#8319#0" expanded="true" />
+            <element signature="e#8346#8347#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/volvain/yash/PinLocation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+          <folding>
+            <element signature="e#3887#3888#0" expanded="true" />
+            <element signature="e#3931#3932#0" expanded="true" />
+            <element signature="e#4267#5001#0" expanded="true" />
+            <element signature="e#5000#5001#0" expanded="true" />
+            <element signature="e#5448#5939#0" expanded="true" />
+            <element signature="e#5938#5939#0" expanded="true" />
+            <element signature="e#5986#6137#0" expanded="true" />
+            <element signature="e#6136#6137#0" expanded="true" />
+            <element signature="e#9838#10728#0" expanded="true" />
+            <element signature="e#10727#10728#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -55,7 +55,7 @@ public void sendRequest(){
         if(Global.checkInternet()==0) {
             Database db= new Database(getContext());
             if(db.checkId()){
-                Log.i("gauravrmsc","creating help sync");
+
                 String message=RequestMessagetf.getText().toString();
             startActivity(new Intent(this.getContext(),HelpSync.class).putExtra("message",message));}
         else { Fragment fragment = new loginFragment();
