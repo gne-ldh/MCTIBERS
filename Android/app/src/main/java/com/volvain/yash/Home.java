@@ -31,9 +31,8 @@ FloatingActionButton btn;
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(this);
-        Log.i("gaurav",""+1);
+
         if(db.checkId()){
-            Log.i("gaurav","true");
             BackgroundWork.sync();
        if(this.getIntent().hasExtra("fragmentNo")){
             if(this.getIntent().getStringExtra("fragmentNo").equals("NotificationFragment"))
@@ -41,13 +40,6 @@ FloatingActionButton btn;
         else loadFragment(new homeFragment());}
 
         else{ loadFragment(new loginFragment());}
-
-        /*else if(fragmentNo==3){
-            loadFragment(new notificationsFragment());
-            fragmentNo=1;
-        }*/
-
-
 
     }
 

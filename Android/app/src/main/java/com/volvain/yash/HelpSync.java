@@ -155,7 +155,6 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
     }
     private void fetchPersonalDetails(){
 
-    //   id=null;//TODO Fetch From Db
             Database db= new Database(this);
             id=db.getSenderId();
             name=db.getSenderName();
