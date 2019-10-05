@@ -76,24 +76,14 @@ public class Database extends SQLiteOpenHelper
     public String getName()
     {
         String nm="";
-       // Long i=new Long(0);
+
         SQLiteDatabase db=this.getReadableDatabase();
-       // String Query ="Select * from Login where id= "+ id;
         String Query ="Select name from Login ";
         Cursor rs= db.rawQuery(Query,null);
         if(rs.moveToNext())
         nm=rs.getString(0);
         else nm=" User";
-        /*while (rs.moveToNext())
-        {
-            i= rs.getLong(0);
-            nm=rs.getString(1);
-        }
-        if(i==id)
-            return nm;
 
-        else
-            return "no_such_id_exist";*/
 return nm;
     }
 
@@ -131,15 +121,12 @@ return nm;
     public  void deletLogIn()
     {
         SQLiteDatabase db=this.getWritableDatabase();
-      //Cursor rs = null;
-      //if(rs.getCount()>0) {
-          db.delete(TableInfo, null, null);
+        db.delete(TableInfo, null, null);
 
     }
 
 
     public void insertHelp(Long ph,String name,double lng,double lat,String message){
-    //{Log.i("gauravrmsc","in insert");
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("Phone_no",ph);
@@ -149,11 +136,7 @@ return nm;
         cv.put("message",message);
 
         db.insert(TableHelp,null,cv);
-
         getNotification();
-
-       // return (int) result;
-
     }
 
 
@@ -231,8 +214,7 @@ return nm;
         Long i=0L;
         String Query="Select Phone_no from "+TableHelp;
         Cursor rs =db.rawQuery(Query,null);
-      //  Log.i("gauravrmsc","checking Value "+id);
-        //Log.i("gauravrmsc","checking Value "+rs.moveToNext());
+
 
         while(rs.moveToNext()) {
             i = rs.getLong(0);
@@ -256,27 +238,16 @@ return nm;
 
     public void getNotification(){
 
-    /*NotificationCompat.Builder builder= new NotificationCompat.Builder(context,"Yash")
-            .setContentTitle("New Request")
-            .setAutoCancel(true)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-        Log.i("gauravrmsc"," n"+builder);
-    NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-        Log.i("gauravrmsc"," notificati");
-    manager.notify(1,builder.build());
-        Log.i("gauravrmsc"," notification sent");
-  */createNotificationChannel();
-       /* NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("");
-        bigText.setBigContentTitle("Today's Bible Verse");
-        bigText.setSummaryText("Text in detail");*/
-       int priority;
+
+     createNotificationChannel();
+
+        int priority;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)priority= NotificationCompat.PRIORITY_HIGH ;else priority=NotificationCompat.PRIORITY_MAX ;
         Intent intent = new Intent(context, Home.class);
         intent.putExtra("fragmentNo","NotificationFragment" );
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(context,CHANNELID)
+        NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(context,CHANNELID)
         .setContentTitle("New Request")
         .setContentText(name+" Needs Help")
         .setAutoCancel(true)
@@ -303,17 +274,12 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
     public double getHelpLatitude(Long id)
     {
         double lat ;
-
         SQLiteDatabase db=this.getReadableDatabase();
         String q= "Select Lat from Help where Phone_no ="+id;
-
         Cursor s =db.rawQuery(q,null);
-
         s.moveToNext();
              lat = s.getDouble(0);
-
         return lat;
-
     }
 
     public double getHelpLng(Long id)
@@ -326,7 +292,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
         Cursor s =db.rawQuery(q,null);
         s.moveToNext();
          lng =s.getDouble(0);
-        Log.i("aa","Lng" + lng);
+
         return lng;
     }
     public void logout() {
@@ -336,10 +302,7 @@ NotificationCompat.Builder notificationBuilder= new NotificationCompat.Builder(c
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){
         SQLiteDatabase db=this.getWritableDatabase();
         ContentValues cv=new ContentValues();
-        //  ArrayList<ArrayList<Double>> first=new ArrayList<>();
-        //ArrayList<ArrayList> firstList=new ArrayList<>();
-        //double first=0, second = 0;
-       // Log.i( "ana","database clear1" +firstList.isEmpty() );
+       
         for (ArrayList firstList:ls){
             Log.i( "ana1","database clear1" +firstList.get(0) );
             cv.put("Lng",(double)firstList.get(0));

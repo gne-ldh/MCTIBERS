@@ -43,7 +43,7 @@
                     android:orientation="vertical">
                     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
                         android:layout_width="match_parent"
-                        
+
                         android:layout_height="wrap_content"
                         android:layout_marginTop="70dp"
                         app:contentPadding="15dp"
