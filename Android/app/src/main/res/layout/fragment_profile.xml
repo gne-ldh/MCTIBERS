@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_width="match_parent"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         tools:context=".ProfileFragment">
 
         <View
@@ -33,7 +33,7 @@
                     android:layout_height="150dp"
                     android:layout_centerHorizontal="true"
 
-                    android:src="@drawable/cop1"
+                    android:src="@drawable/logostep"
                     android:elevation="1dp">
 
                 </de.hdodenhof.circleimageview.CircleImageView>
@@ -49,19 +49,22 @@
                         app:contentPaddingRight="15dp"
                         app:contentPaddingLeft="15dp"
                         app:contentPaddingBottom="15dp"
-                        app:cardCornerRadius="10dp">
+                        app:cardCornerRadius="10dp"
+                        android:elevation="30dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+
                             <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/profileName"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_marginTop="60dp"
                                 android:hint="Name"
                                 android:textColor="#000000"
-                                android:textSize="30dp"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginTop="60dp"/>
+                                android:textSize="30dp" />
 
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -84,7 +87,7 @@
                 android:layout_margin="15dp"
                 android:focusableInTouchMode="true"
                 android:hint="Phone number"
-                android:id="@+id/editContact"
+                android:id="@+id/profileId"
                 android:inputType="number"
                 android:textColor="#000000"
                 android:textSize="20dp" />
@@ -108,17 +111,25 @@
                 android:inputType="textMultiLine"
                 android:textColor="#000000"
                 android:textSize="20dp" />
+
             <Button
+                android:id="@+id/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="15dp"
                 android:text="Save"
                 android:textColor="#000000"
                 android:textSize="20dp"
-                android:layout_margin="15dp"
-
-
                 android:background="@drawable/bg_round">
             </Button>
+
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="@drawable/bg_round"
+                android:text="Save"
+                android:textColor="#000000"
+                android:textSize="20dp">
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
