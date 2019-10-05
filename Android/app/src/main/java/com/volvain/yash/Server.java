@@ -31,7 +31,8 @@ serverUri=context.getString(R.string.server);
 }
 public String getUserLoc(Long id){
 
-    String result="";try{
+    String result="";
+    try{
 
         url=new URL(serverUri+"getUserLoc?id="+id);
         con=(HttpURLConnection)url.openConnection();
@@ -134,13 +135,10 @@ public String getUserLoc(Long id){
     public int setProfile(Long id,String profession,String professionDesc){
     int i=0;
         try {
-            Log.i("gkk","2");
+
             url=new URL(serverUri+"SetProfile?id="+id+"&Profession="+profession+"&ProfessionDesc="+professionDesc);
-            Log.i("gkk","3");
             con=(HttpURLConnection)url.openConnection();
-            Log.i("gkk","4");
             BufferedInputStream in=new BufferedInputStream(con.getInputStream());
-            Log.i("gkk","5");
             i=Integer.parseInt(""+(char)in.read());
         } catch (MalformedURLException e) {
             e.printStackTrace();
