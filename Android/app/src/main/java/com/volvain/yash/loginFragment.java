@@ -1,7 +1,6 @@
 package com.volvain.yash;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,6 @@ public class loginFragment extends Fragment {
     private EditText idField;
     private EditText passswordField;
     loginFragment(){
-      // Log.i("gauravrmsc",""+this.getContext());
 
     }
     @Nullable
@@ -75,8 +73,8 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
-                           submit();
-                           // openHome();
+                            openHome();
+                            getLoc();
                             BackgroundWork.sync();
                         }
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
@@ -104,36 +102,30 @@ public class loginFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-    private void submit(){
+    private void getLoc(){
 
         if(Global.checkInternet()==0){
-          /*  profession=professionTf.getText().toString();
-            Toast.makeText(this.getContext(),profession,Toast.LENGTH_LONG).show();
-            Log.i("gmk",profession);
-            professionDesc=ProfessionDescTf.getText().toString();
-            Log.i("gkk","gkk");*/
-            Data d=new Data.Builder()
-                    .putString("profession","profession")
-                    .putString("professionDesc","professionDesc").build();
-            OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(SetProfileServer.class)
-                    .setInputData(d).build();
-            Log.i("gkk","gkk1");
+
+
+            OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(GetUserLocServer.class)
+                    .build();
+
             WorkManager.getInstance().enqueue(work);
-            Log.i("gkk","gkk2");
             WorkManager.getInstance().getWorkInfoByIdLiveData(work.getId())
                     .observe(this, new Observer<WorkInfo>() {
                         @Override
                         public void onChanged(@Nullable WorkInfo workInfo) {
                             if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                                Toast.makeText(loginFragment.this.getContext(),"Profile Update Sucessful!",Toast.LENGTH_LONG).show();
+                                Toast.makeText(loginFragment.this.getContext(),"Locations Update Sucessful!",Toast.LENGTH_LONG).show();
                             }
                             if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
                                 Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                             else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
-                                Toast.makeText(loginFragment.this.getContext(),"Error",Toast.LENGTH_LONG).show();
+                                Toast.makeText(loginFragment.this.getContext(),"Error Adding Locations",Toast.LENGTH_LONG).show();
                             }
                         }
                     });}
         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
     }
+
 }
