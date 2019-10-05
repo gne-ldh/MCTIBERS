@@ -1,8 +1,6 @@
 package com.volvain.yash;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +19,19 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
-import com.volvain.yash.DAO.Database;
-
 public class loginFragment extends Fragment {
     private Button createAccountBtn;
     private Button loginBtn;
     private EditText idField;
     private EditText passswordField;
+    loginFragment(){
 
+    }
     @Nullable
     @Override
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
       View v= inflater.inflate(R.layout.fragment_login,null);;
         createAccountBtn=(Button)v.findViewById(R.id.createAccount);
         loginBtn=(Button)v.findViewById(R.id.login_btn);
@@ -54,7 +54,7 @@ public class loginFragment extends Fragment {
 
     }
     public void login(){
-        if(new Database(this.getContext()).getId()==0l){
+
         if(Global.checkInternet()==0)
         {
 
@@ -73,8 +73,8 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
-
                             openHome();
+                            getLoc();
                             BackgroundWork.sync();
                         }
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
@@ -82,15 +82,8 @@ public class loginFragment extends Fragment {
                         }
                     }
                 });}
-         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();}
-        else {
-            Fragment fragment = new ProfileFragment();
-            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment);
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
-        }
+         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+
 
     }
     public void openHome(){
@@ -109,4 +102,30 @@ public class loginFragment extends Fragment {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
+    private void getLoc(){
+
+        if(Global.checkInternet()==0){
+
+
+            OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(GetUserLocServer.class)
+                    .build();
+
+            WorkManager.getInstance().enqueue(work);
+            WorkManager.getInstance().getWorkInfoByIdLiveData(work.getId())
+                    .observe(this, new Observer<WorkInfo>() {
+                        @Override
+                        public void onChanged(@Nullable WorkInfo workInfo) {
+                            if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                                Toast.makeText(loginFragment.this.getContext(),"Locations Update Sucessful!",Toast.LENGTH_LONG).show();
+                            }
+                            if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
+                                Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
+                            else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                                Toast.makeText(loginFragment.this.getContext(),"Error Adding Locations",Toast.LENGTH_LONG).show();
+                            }
+                        }
+                    });}
+        else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+    }
+
 }

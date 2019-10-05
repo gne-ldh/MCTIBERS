@@ -8,4 +8,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_pin_locations">Map</string>
     <string name="apiKey">AIzaSyAp6rVERlPFzV8BRn31jn6lqmrGBOmj58I</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
