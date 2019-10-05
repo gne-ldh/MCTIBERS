@@ -21,12 +21,14 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.volvain.yash.DAO.Database;
+
 public class loginFragment extends Fragment {
     private Button createAccountBtn;
     private Button loginBtn;
     private EditText idField;
     private EditText passswordField;
-    public static long ID;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class loginFragment extends Fragment {
 
     }
     public void login(){
+        if(new Database(this.getContext()).getId()==0l){
         if(Global.checkInternet()==0)
         {
 
@@ -70,7 +73,7 @@ public class loginFragment extends Fragment {
                             Toast.makeText(loginFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
                             Toast.makeText(loginFragment.this.getContext(),"Login Sucessful!",Toast.LENGTH_LONG).show();
-                            ID=id;
+
                             openHome();
                             BackgroundWork.sync();
                         }
@@ -79,7 +82,16 @@ public class loginFragment extends Fragment {
                         }
                     }
                 });}
-         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+         else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();}
+        else {
+            Fragment fragment = new ProfileFragment();
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+
     }
     public void openHome(){
         Fragment fragment = new homeFragment();

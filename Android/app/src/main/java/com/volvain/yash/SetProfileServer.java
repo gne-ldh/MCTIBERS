@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.volvain.yash.DAO.Database;
+
 public class SetProfileServer extends Worker {
 Context context;
     public SetProfileServer(@NonNull Context context, @NonNull WorkerParameters workerParams) {
@@ -16,10 +18,12 @@ Context context;
     @NonNull
     @Override
     public Result doWork() {
-        Long id=0l;//TODO get id
+        Long id=new Database(context).getId();
         String profession=getInputData().getString("profession");
         String professionDesc=getInputData().getString("professionDesc");
-        new Server(context).setProfile(id,profession,professionDesc);
+        int i=new Server(context).setProfile(id,profession,professionDesc);
+        if(i==0)return Result.failure();
+        if(i==1)return Result.success();
         return null;
     }
 }

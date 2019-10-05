@@ -6,8 +6,19 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.work.Data;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
+
+import com.volvain.yash.DAO.Database;
 
 
 /**
@@ -27,10 +38,25 @@ public class ProfileFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private String name="";
+    private String profession="";
+    private String professionDesc="";
+    private long id=0l;
+Database db;
+    EditText nameTf;
+    EditText idTf;
+    EditText professionTf;
+    EditText ProfessionDescTf;
+    Button submit;
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
+        db=new Database(this.getContext());
+        id=db.getId();
+        name=db.getName();
+
+
+        //TODO get profile from database
         // Required empty public constructor
     }
 
@@ -59,8 +85,43 @@ public class ProfileFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        nameTf=(EditText) getView().findViewById(R.id.profileName);
+        nameTf.setText(name);
+        idTf=(EditText) getView().findViewById(R.id.profileId);
+        idTf.setText(""+id);
+        professionTf=(EditText) getView().findViewById(R.id.profession);
+        professionTf.setText(profession);
+        ProfessionDescTf.setText(professionDesc);
+        submit=(Button)getView().findViewById(R.id.submit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                submit();
+            }
+        });
     }
-
+private void submit(){
+        if(Global.checkInternet()==0){
+Data d=new Data.Builder()
+        .putString("profession",profession)
+        .putString("professionDesc",professionDesc).build();
+    OneTimeWorkRequest work=new OneTimeWorkRequest.Builder(SetProfileServer.class)
+                             .setInputData(d).build();
+    WorkManager.getInstance().enqueue(work);
+    WorkManager.getInstance().getWorkInfoByIdLiveData(work.getId())
+            .observe(this, new Observer<WorkInfo>() {
+                @Override
+                public void onChanged(@Nullable WorkInfo workInfo) {
+                    if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                        Toast.makeText(ProfileFragment.this.getContext(),"Profile Update Sucessful!",Toast.LENGTH_LONG).show();
+                    }
+                    else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                        Toast.makeText(ProfileFragment.this.getContext(),"Error",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });}
+        else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG).show();
+}
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

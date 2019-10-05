@@ -29,16 +29,33 @@ Server(Context context){
 this.context=context;
 serverUri=context.getString(R.string.server);
 }
+public String getUserLoc(Long id){
 
+    String result="";try{
+
+        url=new URL(serverUri+"getUserLoc?id="+id);
+        con=(HttpURLConnection)url.openConnection();
+        BufferedInputStream in=new BufferedInputStream(con.getInputStream());
+        int i=0;
+        while((i=in.read())!=-1)result+=(char)i;
+    } catch (MalformedURLException e) {
+        e.printStackTrace();
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+    return result;
+}
     public int SendUserLoc(Long id,String locDetails){
         int b=0;
     try{
-        url=new URL(serverUri+"/SetUserLoc?id="+id+"&locDetails="+locDetails);
+        url=new URL(serverUri+"SetUserLoc?id="+id+"&locDetails="+locDetails);
+        Log.i("gauravrmsc","set1"+url.toString());
         con=(HttpURLConnection)url.openConnection();
+        Log.i("gauravrmsc","set2");
         BufferedInputStream i=new BufferedInputStream(con.getInputStream());
-
+        Log.i("gauravrmsc","set3");
         b=Integer.parseInt(""+(char)i.read());
-
+        Log.i("gauravrmsc","set4");
     } catch (MalformedURLException e) {
         e.printStackTrace();
     } catch (IOException e) {
@@ -47,7 +64,6 @@ serverUri=context.getString(R.string.server);
         return b;
     }
     public  String Signup(Long phone,String name,String password){
-
 
         try {
           url =new URL(serverUri+"/signup?phone="+phone+"&name="+name+"&password="+password);
@@ -89,13 +105,13 @@ serverUri=context.getString(R.string.server);
 
     public void getProfile(Long id){
     try{
-        url=new URL(serverUri+"/GetProfile?id="+id);
+        url=new URL(serverUri+"GetProfile?id="+id);
         con=(HttpURLConnection)url.openConnection();
         BufferedInputStream i=new BufferedInputStream(con.getInputStream());
           String result="";
           int c;
           while((c=i.read())!=-1){
-              result+=(int)c;
+              result+=(char)c;
           }
          JSONObject profile=(JSONObject) new JSONParser().parse(result);
           String profession=profile.get("profession").toString();
@@ -111,7 +127,7 @@ serverUri=context.getString(R.string.server);
     public int setProfile(Long id,String profession,String professionDesc){
     int i=0;
         try {
-            url=new URL(serverUri+"/SetProfile?id="+id+"&profession="+profession+"&professionDesc="+professionDesc);
+            url=new URL(serverUri+"SetProfile?id="+id+"&profession="+profession+"&professionDesc="+professionDesc);
             con=(HttpURLConnection)url.openConnection();
             BufferedInputStream in=new BufferedInputStream(con.getInputStream());
             i=Integer.parseInt(""+(char)in.read());
