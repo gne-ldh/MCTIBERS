@@ -6,7 +6,6 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -178,7 +177,7 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
 
     private void getLoc() throws IOException {
-        // getPinnedLocations();
+
         String LocationName = sv.getQuery().toString() + ",India";
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         List<Address> AddressList = geocoder.getFromLocationName(LocationName, 1);
@@ -190,17 +189,11 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
             list.add(1, address.getLatitude());
             ListLocations.add(list);
 
-
-            Log.i( "ana","before" +ListLocations.isEmpty() );
             for (ArrayList firstList:ListLocations){
-             //   Log.i( "ana","before111" +firstList.isEmpty() );
                 if(firstList.isEmpty())return;
                 LatLng loc=new LatLng((Double)firstList.get(1),(Double) firstList.get(0));
-              //  Log.i( "ana","lat" +firstList.get(1));
-                //Log.i( "ana","lng" +firstList.get(0));
                 mMap.addMarker(new MarkerOptions().position(loc));
                 moveCamera(loc,15,"");}
-
 
         }
     }
@@ -211,22 +204,14 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     public void getPinnedLocations() {
 
        ArrayList lst=db.get();
-       Log.i("ana1 ll",""+lst.isEmpty());
         if(lst!=null)ListLocations=lst;
 
     }
 
     public void addToDatabase(){
 
-
-
-
         if(Global.checkInternet()==0){
-
            db.clearLocations();
-           db.insertLngLng(ListLocations);
-
-        //TODO store LatLng in database
            db.insertLngLng(ListLocations);
 
         OneTimeWorkRequest workRequest=new OneTimeWorkRequest.Builder(SetUserLocServer.class).build();

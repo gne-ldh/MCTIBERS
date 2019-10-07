@@ -1,15 +1,16 @@
 package com.volvain.yash;
 
+import android.content.Intent;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.volvain.yash.DAO.Database;
+
 //import com.google.android.gms.common.ConnectionResult;
 //import com.google.android.gms.common.GoogleApiAvailability;
-import android.content.Intent;
-import android.os.Bundle;
-
-import com.volvain.yash.DAO.Database;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,14 +21,7 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_log_in);
         startActivity(new Intent(this, Home.class));
         Database db= new Database(this);
-        //Intent i =new Intent(this,Signup.class);
-        //startActivity(i);
-      // String s= new Server(this).Signup(9939424667l,"GKM","148");
-        //Log.i("******************","$$$$$$$$$$$$$$"+s);
-       // Button b=new Button(this);
-        //b.setText("Hello");
-       // LinearLayout l=(LinearLayout)findViewById(R.id.lay);
-        //l.addView(b);
+
     }
 
 
@@ -37,14 +31,12 @@ public class MainActivity extends AppCompatActivity {
 
     public  void getNotification()
     {
-        // Intent i=new Intent(this,map.class);
-        //   PendingIntent resultPendingIntent=PendingIntent.getActivity(this,1,i,PendingIntent.FLAG_UPDATE_CURRENT);
+
         NotificationCompat.Builder builder=new NotificationCompat.Builder(this,Channel_Id)
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 .setContentTitle("New request")
                 .setContentText("help")
                 .setAutoCancel(true)
-                //.setContentIntent(resultPendingIntent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
         NotificationManagerCompat manager=  NotificationManagerCompat.from(this);
         manager.notify(1,builder.build());

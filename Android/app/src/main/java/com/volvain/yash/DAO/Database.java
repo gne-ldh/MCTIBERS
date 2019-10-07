@@ -331,7 +331,7 @@ return nm;
     }
     public void clearLocations(){
         SQLiteDatabase db=this.getWritableDatabase();
-        String Query="delete from LocationsPinned";
+        String Query="delete from LocationsPinned ";
         db.execSQL(Query);
     }
 
