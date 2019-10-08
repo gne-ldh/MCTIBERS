@@ -1,9 +1,16 @@
 package com.volvain.yash;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
@@ -24,14 +31,11 @@ public class GetUserLocServer extends Worker {
     @NonNull
     @Override
     public Result doWork() {
-        Log.i("userData","3");
         Long id=new Database(context).getId();
         String result=new Server(context).getUserLoc(id);
         try {if(!result.equals("")){
             ArrayList lst=(ArrayList) new JSONParser().parse(result);
-            Log.i("datalistusr",lst.toString());
             new Database(context).insertLngLng(lst);
-            Log.i("datalistusr",lst.toString());
             return Result.success();}
 
         } catch (ParseException e) {
