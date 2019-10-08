@@ -7,4 +7,4 @@ It also offer offline location tracking system when internet connection is not a
 ### You Can Download The apk file from here
 [Download Link](STEP.apk)
 ---
-#[Installation Steps](User%20Guide.pdf)
+[Installation Steps](User%20Guide.pdf)
