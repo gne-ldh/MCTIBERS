@@ -68,9 +68,9 @@ public class signupFragment extends Fragment {
                                     Toast.makeText(signupFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
 
                                else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                                    {Toast.makeText(signupFragment.this.getContext(), "Signup Sucessful!", Toast.LENGTH_LONG).show();
-                                    //TODO Add id and name to database
-                                        openHome();}
+                                    {Toast.makeText(signupFragment.this.getContext(), "Signup Sucessful!\nNow You Can Login to Access Your Account", Toast.LENGTH_LONG).show();
+
+                                        openLogin();}
                                 } else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
                                     Toast.makeText(signupFragment.this.getContext(), "User Already Exists", Toast.LENGTH_LONG).show();
                                 }
@@ -81,8 +81,8 @@ public class signupFragment extends Fragment {
         }
          else Toast.makeText(this.getContext(),"No Internet Connection",Toast.LENGTH_LONG);
     }
-    public void openHome(){
-        Fragment fragment = new homeFragment();
+    public void openLogin(){
+        Fragment fragment = new loginFragment();
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);

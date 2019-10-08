@@ -33,13 +33,13 @@ public String getUserLoc(Long id){
 
     String result="";
     try{
-        Log.i("userData","5");
+
         url=new URL(serverUri+"GetUserLoc?id="+id);
-        Log.i("userData","6");
+
         con=(HttpURLConnection)url.openConnection();
-        Log.i("userData","7");
+
         BufferedInputStream in=new BufferedInputStream(con.getInputStream());
-        Log.i("userData","8");
+
         int i=0;
         while((i=in.read())!=-1)result+=(char)i;
     } catch (MalformedURLException e) {
