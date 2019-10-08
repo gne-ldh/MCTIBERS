@@ -48,7 +48,7 @@ public class HelpSync extends AppCompatActivity implements LocationListener {
 
        setContentView(R.layout.helpframe);
        //message=messageField.getText().toString();//TODO create textfield and use for taking message from user
-       message=this.getIntent().getStringExtra("message");
+       message=this.getIntent().getStringExtra("arg0");
        stop=(Button) findViewById(R.id.stop);
        stop.setOnClickListener(new View.OnClickListener() {
            @Override

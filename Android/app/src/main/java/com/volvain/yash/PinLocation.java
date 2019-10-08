@@ -1,10 +1,14 @@
 package com.volvain.yash;
 
 import android.Manifest;
+import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
+import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,9 +26,12 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,14 +56,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public class PinLocation extends AppCompatActivity implements OnMapReadyCallback {
+public class PinLocation extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,com.google.android.gms.location.LocationListener{
 
 
     private static final String Fine_Location = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String Coarse_Location = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
     private static final float DEFAULT_ZOOM = 15;
-
+    private LocationRequest mLocationRequest=null;
+    GoogleApiClient mGoogleApiClient=null;
+    private Location mLastKnownLocation=null;
+    private LocationCallback locationCallback=null;
 
     private GoogleMap mMap;
     private boolean mLocationPermissionGranted = false;
@@ -64,13 +74,12 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     public static ArrayList<ArrayList<Double>> ListLocations = new ArrayList<>();
 
     double CurLat, CurLng, ENdLat, EndLng;
-    private Location mLastKnownLocation;
-    private LocationCallback locationCallback;
+
     SearchView sv;
     Database db;
     FloatingActionButton floatingButton;
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +87,15 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
         floatingButton = (FloatingActionButton) findViewById(R.id.FloatingButton);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-                ListLocations.clear();
-
+        ListLocations.clear();
        // sv = (SearchView) findViewById(R.id.sv);
         db = new Database(this);
-        getDeviceLocation();
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
+
+
     }
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -138,7 +149,6 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
                 @Override
                 public void onComplete(@NonNull Task task) {
                     if (task.isSuccessful()) {
-
                         Location currentLocation = (Location) task.getResult();
                         CurLat = currentLocation.getLatitude();
                         CurLng = currentLocation.getLongitude();
@@ -209,7 +219,6 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
         if(Global.checkInternet()==0){
            db.clearLocations();
            db.insertLngLng(ListLocations);
-
         OneTimeWorkRequest workRequest=new OneTimeWorkRequest.Builder(SetUserLocServer.class).build();
         WorkManager.getInstance().enqueue(workRequest);
         WorkManager.getInstance().getWorkInfoByIdLiveData(workRequest.getId())
@@ -248,4 +257,50 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(loc));
                 moveCamera(loc,15,"");}
     }}
+    protected void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks((GoogleApiClient.ConnectionCallbacks) this)
+                .addOnConnectionFailedListener((GoogleApiClient.OnConnectionFailedListener) this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+    protected void createLocationRequest() {
+
+        //remove location updates so that it resets
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, (com.google.android.gms.location.LocationListener) this); //Import should not be **android.Location.LocationListener**
+        //import should be **import com.google.android.gms.location.LocationListener**;
+
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(10000);
+        mLocationRequest.setFastestInterval(5000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        //restart location updates with the new interval
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onLocationChanged(Location location) {
+        getDeviceLocation();
+    }
+
+
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        createLocationRequest();
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
 }

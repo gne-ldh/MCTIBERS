@@ -1,10 +1,13 @@
 package com.volvain.yash;
 
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
@@ -15,7 +18,10 @@ import com.volvain.yash.DAO.Database;
 public class Home extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener  {
 
 FloatingActionButton btn;
-
+ CheckLocation checkLoc;
+ Class c=null;
+ String[] args=null;
+ @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +46,7 @@ FloatingActionButton btn;
         else loadFragment(new homeFragment());}
 
         else{ loadFragment(new loginFragment());}
+        checkLoc=new CheckLocation(this,this);
 
     }
 
@@ -51,6 +58,7 @@ getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,f
         return false;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         Fragment fragment =null;
@@ -59,9 +67,11 @@ getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,f
                 fragment= new homeFragment();
                 break;
             case  R.id.navigation_dashboard:
+
                 fragment=new settingsFragment();
                 break;
             case R.id.navigation_notifications:
+
                 fragment=new notificationsFragment();
                 break;
             case  R.id.login:
@@ -73,7 +83,31 @@ getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,f
         }
         return loadFragment(fragment);
     }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.i("reqCode",""+requestCode);
+        if (requestCode == 1) {
+            Log.i("3687g","3687"+args[0]);
+            checkLoc.displayLocationSettingsRequest(c,args);
+           // new CheckLocation(this,this,PinLocation.class).displayLocationSettingsRequest();
+            //Log.i("checkLoc","here");
+            //Intent i=new Intent(this,PinLocation.class);
+            //startActivity(i);
+        }
+    }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void checkPermissions(Class c,String... s){
+       checkLoc.checkPermission();
+    checkLoc.displayLocationSettingsRequest(c,s);}
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions, int[] grantResults) {
+        if (requestCode == 2) {
+            checkLoc.checkPermission();
+        }
 
+    }
 }
