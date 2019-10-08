@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -16,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double requesterLatitude;
     private Handler mHandler=new Handler();
     public int AAAA=0;
+
     private Long id;
     Database db;
      int n=0;
@@ -65,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
        // String s=this.getIntent().getStringExtra("id");
        id= Long.parseLong(this.getIntent().getStringExtra("arg0"));
-        Log.i("gauravrmsc","arg0="+id);
+       // Log.i("gauravrmsc","arg0="+id);
         //id=Long.parseLong();
      //   Log.i("aaa"," id="+id);
 

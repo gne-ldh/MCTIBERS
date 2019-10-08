@@ -1,6 +1,7 @@
 package com.volvain.yash;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.location.Address;
@@ -14,6 +15,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -58,7 +61,7 @@ import java.util.Locale;
 
 public class PinLocation extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener,com.google.android.gms.location.LocationListener{
 
-
+    private int currLocSet=0;
     private static final String Fine_Location = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String Coarse_Location = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -67,7 +70,8 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     GoogleApiClient mGoogleApiClient=null;
     private Location mLastKnownLocation=null;
     private LocationCallback locationCallback=null;
-
+    private AlertDialog.Builder loadingBuilder;
+    private AlertDialog loading;
     private GoogleMap mMap;
     private boolean mLocationPermissionGranted = false;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -92,6 +96,7 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
         db = new Database(this);
         buildGoogleApiClient();
         mGoogleApiClient.connect();
+        loading=getDialogProgressBar().create();
 
 
     }
@@ -167,12 +172,14 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     private void moveCamera(LatLng latLng, float zoom, String title) {
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
-        MarkerOptions options = new MarkerOptions()
-                .position(latLng)
-                .title(title);
+       if(currLocSet!=0) {
+           MarkerOptions options = new MarkerOptions()
+                   .position(latLng)
+                   .title(title);
 
-        mMap.addMarker(options);
-
+           mMap.addMarker(options);
+       }
+       if(currLocSet==0)currLocSet=1;
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 
             @Override
@@ -226,11 +233,13 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
                     @Override
                     public void onChanged(@Nullable WorkInfo workInfo) {
                         if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
-                            Toast.makeText(PinLocation.this, "Processing!", Toast.LENGTH_LONG).show();
+                           loading.show();// Toast.makeText(PinLocation.this, "Processing!", Toast.LENGTH_LONG).show();
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
+                          loading.dismiss();
                             Toast.makeText(PinLocation.this,"Locations Added!",Toast.LENGTH_LONG).show();
                         }
                         else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                            loading.dismiss();
                             Toast.makeText(PinLocation.this,"Error Adding Locations",Toast.LENGTH_LONG).show();
                         }
                     }
@@ -282,6 +291,7 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onLocationChanged(Location location) {
+       if(currLocSet==0)
         getDeviceLocation();
     }
 
@@ -301,6 +311,23 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
     @Override
     public void onConnectionSuspended(int i) {
+
+    }
+    public AlertDialog.Builder getDialogProgressBar() {
+
+        if (loadingBuilder == null) {
+            loadingBuilder = new AlertDialog.Builder(this);
+
+            loadingBuilder.setTitle("Loading...");
+
+            final ProgressBar progressBar = new ProgressBar(this);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progressBar.setLayoutParams(lp);
+            loadingBuilder.setView(progressBar);
+        }
+        return loadingBuilder;
 
     }
 }

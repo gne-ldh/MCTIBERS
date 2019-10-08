@@ -37,7 +37,8 @@ public class settingsFragment extends Fragment {
     public void Func(){
         Home home=(Home)getActivity();
         home.c=PinLocation.class;
-        home.checkPermissions(PinLocation.class);
+        home.args=null;
+        home.checkPermissions(PinLocation.class,null);
        // Intent i=new Intent(this.getContext(),PinLocation.class);
        // startActivity(i);
 

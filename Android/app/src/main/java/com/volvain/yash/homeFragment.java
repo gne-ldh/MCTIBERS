@@ -18,6 +18,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.work.WorkManager;
 
 import com.volvain.yash.DAO.Database;
 
@@ -81,6 +82,7 @@ public class homeFragment extends Fragment {
     }
 
     private void logout() {
+        WorkManager.getInstance().cancelAllWork();
         Database obj = new Database(this.getContext());
         obj.logout();
         Intent i = new Intent(this.getContext(), Home.class);

@@ -86,9 +86,9 @@ getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,f
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("reqCode",""+requestCode);
+
         if (requestCode == 1) {
-            Log.i("3687g","3687"+args[0]);
+
             checkLoc.displayLocationSettingsRequest(c,args);
            // new CheckLocation(this,this,PinLocation.class).displayLocationSettingsRequest();
             //Log.i("checkLoc","here");
