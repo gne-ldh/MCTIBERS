@@ -289,7 +289,12 @@ return nm;
         return lng;
     }
     public void logout() {
-        deletLogIn();
+      //  deletLogIn();
+        SQLiteDatabase db=this.getWritableDatabase();
+        db.delete(TableInfo, null, null);
+        db.delete(TableHelp, null, null);
+        db.delete("LocationsPinned", null, null);
+
     }
 
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){

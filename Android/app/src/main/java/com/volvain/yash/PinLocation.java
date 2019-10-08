@@ -202,7 +202,6 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
 
     public void getPinnedLocations() {
-
        ArrayList lst=db.get();
         if(lst!=null)ListLocations=lst;
 
