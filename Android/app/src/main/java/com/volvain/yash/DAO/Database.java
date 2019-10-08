@@ -288,9 +288,6 @@ return nm;
 
         return lng;
     }
-    public void logout() {
-        deletLogIn();
-    }
 
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){
         SQLiteDatabase db=this.getWritableDatabase();
@@ -368,6 +365,10 @@ return nm;
             lst.add(l);}
         Log.i("Database"," " +lst.isEmpty());
         return lst;
+    }
+
+    public void logout(){
+        deletLogIn();
     }
 }
 

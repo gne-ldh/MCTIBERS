@@ -1,12 +1,15 @@
 package com.volvain.yash;
 
 import android.Manifest;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationServices;
@@ -31,11 +35,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.volvain.yash.DAO.Database;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -71,7 +81,7 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
                 ListLocations.clear();
 
-        sv = (SearchView) findViewById(R.id.sv);
+       // sv = (SearchView) findViewById(R.id.sv);
         db = new Database(this);
         getDeviceLocation();
     }
@@ -79,33 +89,41 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public void onMapReady(GoogleMap googleMap) {
-        sv = findViewById(R.id.sv);
+
         mMap = googleMap;
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
-        sv.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
+        String apiKey = getString(R.string.apiKey);
+        if(!Places.isInitialized())
+            Places.initialize(getApplicationContext(),apiKey);
+        PlacesClient placesClient=Places.createClient(this);
+       AutocompleteSupportFragment autocompleteSupportFragment=(AutocompleteSupportFragment)getSupportFragmentManager().findFragmentById(R.id.autocomplete);
+        autocompleteSupportFragment.setPlaceFields(Arrays.asList(Place.Field.ID,Place.Field.NAME,Place.Field.ADDRESS));
+        autocompleteSupportFragment.getView().setBackgroundColor(Color.WHITE);
+        autocompleteSupportFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
-            public boolean onQueryTextSubmit(String s) {
+            public void onPlaceSelected(@NonNull Place place) {
+               String LocationName =place.getName();
 
                 try {
-                    getLoc();
-
-
+                    getLoc(LocationName);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                return false;
+                Log.i("anaa"," "+LocationName);
             }
 
             @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
+            public void onError(@NonNull Status status) {
+             Log.i("anaa","error "+status);
             }
         });
+
+
 
     }
 
@@ -176,27 +194,6 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
     }
 
 
-    private void getLoc() throws IOException {
-
-        String LocationName = sv.getQuery().toString() + ",India";
-        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-        List<Address> AddressList = geocoder.getFromLocationName(LocationName, 1);
-       getPinnedLocations();
-        if (AddressList.size() > 0) {
-            Address address = AddressList.get(0);
-            ArrayList<Double> list = new ArrayList<>();
-            list.add(0, address.getLongitude());
-            list.add(1, address.getLatitude());
-            ListLocations.add(list);
-
-            for (ArrayList firstList:ListLocations){
-                if(firstList.isEmpty())return;
-                LatLng loc=new LatLng((Double)firstList.get(1),(Double) firstList.get(0));
-                mMap.addMarker(new MarkerOptions().position(loc));
-                moveCamera(loc,15,"");}
-
-        }
-    }
 
 
 
@@ -234,4 +231,22 @@ public class PinLocation extends AppCompatActivity implements OnMapReadyCallback
 
     }
 
+
+    public void getLoc(String location) throws IOException {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        List<Address> AddressList = geocoder.getFromLocationName(location, 1);
+        //   getPinnedLocations();
+        if (AddressList.size() > 0) {
+            Address address = AddressList.get(0);
+            ArrayList<Double> list = new ArrayList<>();
+            list.add(0, address.getLongitude());
+            list.add(1, address.getLatitude());
+            ListLocations.add(list);
+
+            for (ArrayList firstList:ListLocations){
+                if(firstList.isEmpty())return;
+                LatLng loc=new LatLng((Double)firstList.get(1),(Double) firstList.get(0));
+                mMap.addMarker(new MarkerOptions().position(loc));
+                moveCamera(loc,15,"");}
+    }}
 }
