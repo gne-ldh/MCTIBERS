@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Criteria;
@@ -16,6 +17,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -47,6 +50,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double requesterLatitude;
     private Handler mHandler=new Handler();
     public int AAAA=0;
+
     private Long id;
     Database db;
      int n=0;
@@ -64,8 +68,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         db=new Database(this);
 
        // String s=this.getIntent().getStringExtra("id");
-       id= this.getIntent().getLongExtra("id",-1l);
-        Log.i("gauravrmsc","id="+id);
+       id= Long.parseLong(this.getIntent().getStringExtra("arg0"));
+       // Log.i("gauravrmsc","arg0="+id);
         //id=Long.parseLong();
      //   Log.i("aaa"," id="+id);
 
@@ -93,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Log.i("gauravrmsc","result="+result);
         addMarkersToMap(result,mMap);
         addPolyline(result,mMap);
-        onLocationChanged(location);
+        //onLocationChanged(location);
 
 
         // Add a marker in Sydney and move the camera
@@ -104,6 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onLocationChanged(Location location) {
+
         myLongitude=location.getLongitude();
         myLatitude=location.getLatitude();
         DirectionsResult result=directionsResult();
@@ -236,15 +241,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Criteria criteria=new Criteria();
         provider=locationManager.getBestProvider(criteria,false);
+        locationManager.requestLocationUpdates
+                (provider, 500, 1, this);
         location = locationManager.getLastKnownLocation(provider);
         //Toast.makeText(this,""+location,Toast.LENGTH_LONG).show();
         if(location==null){
             Log.i("gauravrmsc","gps not available");
             provider=LocationManager.NETWORK_PROVIDER;
+            locationManager.requestLocationUpdates
+                    (provider, 500, 1, this);
             location = locationManager.getLastKnownLocation(provider);
 
         }
-
+        //if(location==null)findLocationProvider();
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onResume() {

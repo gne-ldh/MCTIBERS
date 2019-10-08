@@ -1,11 +1,14 @@
 package com.volvain.yash;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,6 +28,8 @@ public class signupFragment extends Fragment {
     EditText passwordField;
     EditText confirmPasswordField;
     Button submitButton;
+    private AlertDialog.Builder loadingBuilder;
+    private AlertDialog loading;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class signupFragment extends Fragment {
                 signup();
             }
         });
+        loading=getDialogProgressBar().create();
        return v;
     }
     public void signup(){
@@ -65,13 +71,16 @@ public class signupFragment extends Fragment {
                             @Override
                             public void onChanged(@Nullable WorkInfo workInfo) {
                                 if (workInfo != null && workInfo.getState() == WorkInfo.State.RUNNING||workInfo.getState() == WorkInfo.State.ENQUEUED)
-                                    Toast.makeText(signupFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(signupFragment.this.getContext(), "Processing!", Toast.LENGTH_LONG).show();
+                                    loading.show();
 
                                else if (workInfo != null && workInfo.getState() == WorkInfo.State.SUCCEEDED) {
-                                    {Toast.makeText(signupFragment.this.getContext(), "Signup Sucessful!\nNow You Can Login to Access Your Account", Toast.LENGTH_LONG).show();
+                                    {loading.dismiss();
+                                        Toast.makeText(signupFragment.this.getContext(), "Signup Sucessful!\nNow You Can Login to Access Your Account", Toast.LENGTH_LONG).show();
 
                                         openLogin();}
                                 } else if (workInfo != null && workInfo.getState() == WorkInfo.State.FAILED) {
+                                    loading.dismiss();
                                     Toast.makeText(signupFragment.this.getContext(), "User Already Exists", Toast.LENGTH_LONG).show();
                                 }
                             }
@@ -88,5 +97,22 @@ public class signupFragment extends Fragment {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+    public AlertDialog.Builder getDialogProgressBar() {
+
+        if (loadingBuilder == null) {
+            loadingBuilder = new AlertDialog.Builder(this.getContext());
+
+            loadingBuilder.setTitle("Loading...");
+
+            final ProgressBar progressBar = new ProgressBar(this.getContext());
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            progressBar.setLayoutParams(lp);
+            loadingBuilder.setView(progressBar);
+        }
+        return loadingBuilder;
+
     }
 }

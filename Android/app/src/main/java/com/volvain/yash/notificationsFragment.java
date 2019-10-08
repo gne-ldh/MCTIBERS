@@ -2,6 +2,7 @@ package com.volvain.yash;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.work.WorkManager;
 
@@ -50,6 +52,7 @@ public class notificationsFragment extends Fragment {
         notificationButton.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         notificationButton.setText(name+" needs help\n\nMessage "+message+"\n\ncontact : "+id);
         notificationButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
                 Button b=(Button)v;
@@ -57,10 +60,16 @@ public class notificationsFragment extends Fragment {
                 Long id=Long.parseLong(new StringBuffer(new StringBuffer(text1).reverse().substring(0,10)).reverse().toString());
                 Log.i("gauravrmsc","a");
                 WorkManager.getInstance().cancelAllWork();
-               Intent intent=new Intent(notificationsFragment.this.getContext(),MapsActivity.class);
+              /* Intent intent=new Intent(notificationsFragment.this.getContext(),MapsActivity.class);
                intent.putExtra("id",id);
                 Log.i("gauravrmsc","a1"+id);
-               startActivity(intent);
+               startActivity(intent);*/
+                String[] message = {""+id};
+                Home home=((Home)getActivity());
+                home.c=MapsActivity.class;
+                home.args=message;
+                Log.i("3687g",message[0]);
+                home.checkPermissions(MapsActivity.class,message);
                //TODO Get id from here for search
             }
         });

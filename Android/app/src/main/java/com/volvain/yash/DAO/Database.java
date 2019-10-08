@@ -288,14 +288,15 @@ return nm;
 
         return lng;
     }
+
     public void logout() {
-      //  deletLogIn();
         SQLiteDatabase db=this.getWritableDatabase();
         db.delete(TableInfo, null, null);
         db.delete(TableHelp, null, null);
         db.delete("LocationsPinned", null, null);
 
     }
+
 
     public void insertLngLng(ArrayList<ArrayList<Double>> ls){
         SQLiteDatabase db=this.getWritableDatabase();
@@ -374,6 +375,8 @@ return nm;
         Log.i("Database"," " +lst.isEmpty());
         return lst;
     }
+
+
 }
 
 
